@@ -10,10 +10,10 @@
         {% for venta in ventas %}
         <li class="list-group-item d-flex justify-content-between align-items-start">
             <div class="ms-2 me-auto">
-                <div class="fw-bold"><strong>Fecha:</strong> {{ venta.date }}</div>
+                <div class="fw-bold"><strong>Fecha:</strong> {{ venta.fecha }}</div>
                 <p class="card-text"><strong>Cliente:</strong> {{ venta.cliente }}</p>
                 <p class="card-text"><strong>Producto:</strong> {{ venta.producto }}</p>
-                <p class="card-text"><strong>Precio:</strong> {{ venta.price }}</p>
+                <p class="card-text"><strong>Precio:</strong> {{ venta.precio }}</p>
             </div>
             <div>
                 <a href="{% url 'bicicletas:info_venta' venta.id %}" class="btn btn-info btn-sm">

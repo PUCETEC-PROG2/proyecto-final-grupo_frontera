@@ -13,6 +13,14 @@
             <div class="ms-2 me-auto">
                 <div class="fw-bold"><strong>Nombre de Categoría:</strong> {{ category.name }}</div>
                 <p class="card-text"><strong>Descripción:</strong> {{ category.descripcion }}</p>
+                <div class="fw-bold">
+                    <strong>Foto:</strong>
+                    {% if category.picture %}
+                        <img src="{{ category.picture.url }}" alt="Imagen de {{ category.name }}" style="max-width: 200px; max-height: 200px;">
+                    {% else %}
+                        <p>No hay imagen disponible</p>
+                    {% endif %}
+                </div>
             </div>
             <div>
                 <a href="{% url 'bicicletas:info_category' category.id %}" class="btn btn-primary">

@@ -8,7 +8,8 @@ La implementación completa de este proyecto demostrará la capacidad de los est
 
 ## Nombres de los estudiantes
 
-<Ingresar aquí los nombres de los estudiantes>
+Nelson Allauca
+Michael Recalde
 
 ## Objetivos 
 

@@ -205,3 +205,8 @@ def delete_venta(request, id):
     venta = get_object_or_404(Venta, pk = id)
     venta.delete()
     return redirect("bicicletas:venta")
+
+
+def ventas_list(request):
+    ventas = Venta.objects.all()  # Obtén todas las ventas
+    return render(request, 'ventas_list.html', {'ventas': ventas})

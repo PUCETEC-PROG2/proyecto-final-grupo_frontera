@@ -6,7 +6,7 @@
     <i class="fa-solid fa-arrow-left"><strong> Volver</strong></i>
 </a>
 <p style="height: 1rem;"></p>
-<h1><strong>Información de la categoria:<strong></h1>
+<h1><strong>Información de la categoría:<strong></h1>
 <p style="height: 5px;"></p>
 <h4>
     <dl class="row">
@@ -21,7 +21,15 @@
 
         <dt class="col-sm-3">Marca</dt>
         <dd class="col-sm-9">{{ category.marca }}</dd>
+
+        <dt class="col-sm-3">Foto:</dt>
+        <dd class="col-sm-9">
+            {% if category.picture %}
+                <img src="{{ category.picture.url }}" alt="Imagen de {{ category.name }}" style="max-width: 300px; max-height: 300px;">
+            {% else %}
+                <p>No hay imagen disponible</p>
+            {% endif %}
+        </dd>
     </dl>
 </h4>
-
 {% endblock content %}
