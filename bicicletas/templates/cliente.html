@@ -8,23 +8,23 @@
     </a>
     <p style="height: 1rem;"></p>
     <ol class="list-group list-group-numbered">
-        {% for customer in customers %}
+        {% for cliente in clientes %}
         <li class="list-group-item d-flex justify-content-between align-items-start">
             <div class="ms-2 me-auto">
                 <div class="fw-bold"><strong>Nombre:</strong> {{ cliente }}</div>
-                    <p class="card-text"><strong>Cedula:</strong> {{ cliente.cedula }}</p>
+                <p class="card-text"><strong>Cédula:</strong> {{ cliente.cedula }}</p>
             </div>
-                <div>
-                    <a href="{% url 'bicicletas:info_cliente' cliente.id %}" class="btn btn-primary">
-                        <i class="fa-solid fa-eye"></i>
-                    </a>
-                    <a href="{% url 'bicicletas:edit_cliente' cliente.id %}" class="btn btn-primary">
-                        <i class="fa-solid fa-pencil"></i>
-                    </a>
-                    <a href="{% url 'bicicletas:delete_cliente' cliente.id %}" class="btn btn-danger">
-                        <i class="fa-solid fa-trash"></i>
-                    </a>
-                </div>  
+            <div>
+                <a href="{% url 'bicicletas:info_cliente' cliente.id %}" class="btn btn-primary">
+                    <i class="fa-solid fa-eye"></i>
+                </a>
+                <a href="{% url 'bicicletas:edit_cliente' cliente.id %}" class="btn btn-primary">
+                    <i class="fa-solid fa-pencil"></i>
+                </a>
+                <a href="{% url 'bicicletas:delete_cliente' cliente.id %}" class="btn btn-danger">
+                    <i class="fa-solid fa-trash"></i>
+                </a>
+            </div>
         </li>
         {% endfor %}
     </ol>

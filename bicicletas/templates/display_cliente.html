@@ -1,22 +1,26 @@
 {% extends "base.html" %}
-{% block title %}Cliente {{ customer }}{% endblock title %}
+{% block title %}Cliente {{ cliente }}{% endblock title %}
 {% block content %}
+<p style="height: 1rem;"></p>
+<a href="{% url 'bicicletas:cliente' %}" class="btn btn-primary">
+    <i class="fa-solid fa-arrow-left"><strong> Volver</strong></i>
+</a>
 <p style="height: 1rem;"></p>
 <h1><strong>Información:<strong></h1>
 <p style="height: 5px;"></p>
 <h4>
     <dl class="row">
         <dt class="col-sm-3">Nombre</dt>
-        <dd class="col-sm-9">{{ cliente.primer_nombre }}</dd>
+        <dd class="col-sm-9">{{ cliente.first_name }}</dd>
 
         <dt class="col-sm-3">Apellido</dt>
-        <dd class="col-sm-9">{{ cliente.ultimo_nombre }}</dd>
+        <dd class="col-sm-9">{{ cliente.last_name }}</dd>
 
         <dt class="col-sm-3">Fecha de Nacimiento</dt>
-        <dd class="col-sm-9">{{ cliente.fecha_nacimiento }}</dd>
+        <dd class="col-sm-9">{{ cliente.birth_date }}</dd>
 
         <dt class="col-sm-3">Numero celular</dt>
-        <dd class="col-sm-9">{{ cliente.telefono }}</dd>
+        <dd class="col-sm-9">{{ cliente.phone }}</dd>
 
         <dt class="col-sm-3">Cedula de Identidad</dt>
         <dd class="col-sm-9">{{ cliente.cedula }}</dd>

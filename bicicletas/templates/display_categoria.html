@@ -1,0 +1,27 @@
+{% extends "base.html" %}
+{% block title %}Categoría {{ category.name }}{% endblock title %}
+{% block content %}
+<p style="height: 1rem;"></p>
+<a href="{% url 'bicicletas:category' %}" class="btn btn-primary">
+    <i class="fa-solid fa-arrow-left"><strong> Volver</strong></i>
+</a>
+<p style="height: 1rem;"></p>
+<h1><strong>Información de la categoria:<strong></h1>
+<p style="height: 5px;"></p>
+<h4>
+    <dl class="row">
+        <dt class="col-sm-3">Nombre de Categoría</dt>
+        <dd class="col-sm-9">{{ category.name }}</dd>
+
+        <dt class="col-sm-3">Tipo</dt>
+        <dd class="col-sm-9">{{ category.type }}</dd>
+
+        <dt class="col-sm-3">Descripción</dt>
+        <dd class="col-sm-9">{{ category.descripcion }}</dd>
+
+        <dt class="col-sm-3">Marca</dt>
+        <dd class="col-sm-9">{{ category.marca }}</dd>
+    </dl>
+</h4>
+
+{% endblock content %}

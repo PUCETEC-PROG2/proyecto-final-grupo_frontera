@@ -1,0 +1,34 @@
+{% extends "base.html" %}
+{% block title %}Compra{% endblock title %}
+{% block content %}
+<h5>
+    <p style="height: 1rem;"></p>
+    <a href="{% url 'bicicletas:add_venta' %}" class="btn btn-primary">
+        <i class="fa-regular fa-address-card"> Agregar Pedido</i>
+    </a>
+    <p style="height: 1rem;"></p>
+    <ol class="list-group list-group-numbered">
+        {% for venta in ventas %}
+        <li class="list-group-item d-flex justify-content-between align-items-start">
+            <div class="ms-2 me-auto">
+                <div class="fw-bold"><strong>Fecha:</strong> {{ venta.date }}</div>
+                    <p class="card-text"><strong>Cliente:</strong> {{ venta.cliente }}</p>
+                    <p class="card-text"><strong>Producto:</strong> {{ venta.product }}</p>
+                    <p class="card-text"><strong>Precio:</strong> {{ venta.precio }}</p>
+            </div>
+                <div>
+                    <a href="{% url 'bicicletas:info_venta' venta.id %}" class="btn btn-primary">
+                        <i class="fa-solid fa-eye"></i>
+                    </a>
+                    <a href="{% url 'bicicletas:edit_venta' venta.id %}" class="btn btn-primary">
+                        <i class="fa-solid fa-pencil"></i>
+                    </a>
+                    <a href="{% url 'bicicletas:delete_venta' venta.id %}" class="btn btn-danger">
+                        <i class="fa-solid fa-trash"></i>
+                    </a>
+                </div>  
+        </li>
+        {% endfor %}
+    </ol>
+</h5>
+{% endblock content %}
