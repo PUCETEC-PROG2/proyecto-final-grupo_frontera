@@ -28,4 +28,6 @@ urlpatterns = [
     path("venta/<int:sale_id>/", views.info_venta, name="info_venta"),
     path("add_venta/", views.add_venta, name="add_venta"),#apartado de ventas
     path("delete_venta/<int:id>/", views.delete_venta, name="delete_venta"),
+    path('venta/<int:venta_id>/', views.detalle_venta, name='info_venta'),
+
 ]

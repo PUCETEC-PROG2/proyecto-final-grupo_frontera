@@ -4,8 +4,8 @@ class Cliente(models.Model):
     first_name = models.CharField(max_length=30, null=False)
     last_name = models.CharField(max_length=30, null=False)
     birth_date = models.DateField(null=False)
-    phone = models.CharField(max_length=15, null=True, blank=True)  # Puedes ajustar el max_length según sea necesario
-    cedula = models.CharField(max_length=10, unique=True, null=False, blank=False)  # Ajusta el max_length según la longitud máxima de cédula que manejes
+    phone = models.CharField(max_length=15, null=True, blank=True) 
+    cedula = models.CharField(max_length=10, unique=True, null=False, blank=False)  
  #devuelve el primer nombre y ultimo
 
     def __str__(self):
@@ -14,10 +14,10 @@ class Cliente(models.Model):
     
 class Categoria(models.Model):
     BICICLETA_MARCA = [
-        ('GNT', 'Giant'),
-        ('TRK', 'Trek'),
-        ('SPZ', 'Specialized'),
+        ('TRK', 'TREK'),
         ('CND', 'Cannondale'),
+        ('GNT', 'Giant'),
+        ('BNT', 'Bennoto'),
     ]
 
     TIPO_BICICLETA = [
@@ -43,7 +43,7 @@ class Producto(models.Model):
     price = models.DecimalField(null=False, default=1, max_digits=4, decimal_places=2)
     cantidad = models.IntegerField(default=1, null=False)
     category = models.ForeignKey(Categoria, on_delete=models.CASCADE)
-    picture = models.ImageField(upload_to='product_images')
+    picture = models.ImageField(upload_to='category/')
  
     def __str__(self):
         return f"{self.name}"
@@ -53,7 +53,7 @@ class Venta(models.Model):
     cliente = models.ForeignKey(Cliente, on_delete=models.CASCADE)
     date = models.DateTimeField(null=False)
     cantidad = models.PositiveIntegerField()
-    price = models.DecimalField(null=False, max_digits=10, decimal_places=3)
+    price = models.DecimalField(null=False, max_digits=4, decimal_places=2)
     
     def __str__(self):
         return f"{self.cliente} {self.date} {self.price}"

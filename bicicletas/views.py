@@ -11,12 +11,31 @@ class CustomLoginView(LoginView):
 
 def index(request):
     return render(request, 'index.html')
-
+#cliente, venta, producto, categoria
 def cliente(request):
     clientes = Cliente.objects.order_by('last_name')
     template = loader.get_template('cliente.html')
     return HttpResponse(template.render({'clientes': clientes}, request))
 
+#categoria-----------------------------------------------------------------#
+def category(request):
+    categorys = Categoria.objects.order_by('name')
+    template = loader.get_template('categoria.html')
+    return HttpResponse(template.render({'categorys': categorys}, request))
+
+#producto____________________________________________________________#
+def product(request):
+    products = Producto.objects.order_by('name')
+    template = loader.get_template('producto.html')
+    return HttpResponse(template.render({'products': products}, request))
+
+#ventas---------------------------------------------------#
+def venta(request):
+    ventas = Venta.objects.order_by('product')
+    template = loader.get_template('venta.html')
+    return HttpResponse(template.render({'ventas': ventas}, request))
+#------------------------------------------------------------------------------------------------------------------------
+#infromacion de cliente, venta, categoria, producto
 def info_cliente(request, cliente_id):
     cliente = get_object_or_404(Cliente, pk=cliente_id)
     template = loader.get_template('display_cliente.html')
@@ -24,7 +43,32 @@ def info_cliente(request, cliente_id):
         'cliente': cliente
     }
     return HttpResponse(template.render(context, request))
-
+#muestra la informacion que se puso dentro de la categoria
+def info_category(request, category_id):
+    category = get_object_or_404(Categoria, pk= category_id)
+    template = loader.get_template('display_categoria.html')
+    context = {
+        'category': category
+    }
+    return HttpResponse(template.render(context, request))
+#muestra informacione especifica del producto qye pusimos 
+def info_product(request, product_id):
+    product = get_object_or_404(Producto, pk= product_id)
+    template = loader.get_template('display_producto.html')#detalles del producto 
+    context = {
+        'product': product
+    }
+    return HttpResponse(template.render(context, request))
+#venta-----------------------
+def info_venta(request, sale_id):
+    venta = get_object_or_404(Venta, pk= sale_id)
+    template = loader.get_template('display_venta.html')#detalles de la venta que se hizo 
+    context = {
+        'venta': venta
+    }
+    return HttpResponse(template.render(context, request))
+#-------------------------------------------------------------------------------------------------------------------
+#funciones para añadir clientes, ventas, productos, categorias
 @login_required
 def add_cliente(request):
     if request.method == 'POST':
@@ -36,32 +80,6 @@ def add_cliente(request):
         form = ClienteForm()   
     return render(request, 'cliente_form.html', {'form': form})
 
-@login_required
-def delete_cliente(request, id):
-    cliente = get_object_or_404(Cliente, pk = id)
-    cliente.delete()
-    return redirect("bicicletas:cliente")
-
-@login_required
-def edit_cliente(request, id):
-    cliente = get_object_or_404(Cliente, pk = id)
-    if request.method == 'POST':
-        form = ClienteForm(request.POST, request.FILES, instance=cliente)
-        if form.is_valid():
-            form.save()
-            return redirect('bicicletas:cliente')
-    else:
-        form = ClienteForm(instance=cliente)       
-    return render(request, 'cliente_form.html', {'form': form})
-
-#para editar el c,iente
-
-
-#categoria-----------------------------------------------------------------#
-def category(request):
-    categorys = Categoria.objects.order_by('name')
-    template = loader.get_template('categoria.html')
-    return HttpResponse(template.render({'categorys': categorys}, request))
 #para añadir las categoria 
 @login_required
 def add_category(request):
@@ -74,64 +92,6 @@ def add_category(request):
         form = CategoriaForm()   
     return render(request, 'categoria_form.html', {'form': form}) #formulario de las categoria 
 
-
-
-#muestra la informacion que se puso dentro de la categoria
-def info_category(request, category_id):
-    category = get_object_or_404(Categoria, pk= category_id)
-    template = loader.get_template('display_categoria.html')
-    context = {
-        'category': category
-    }
-    return HttpResponse(template.render(context, request))
-#para editar si es que se hubo un errro al ingrsar akgo en el añadir categoria
-@login_required
-def edit_category(request, id):
-    category = get_object_or_404(Categoria, pk = id)
-    if request.method == 'POST':
-        form = CategoriaForm(request.POST, request.FILES, instance=category)
-        if form.is_valid():
-            form.save()
-            return redirect('bicicletas:category')
-    else:
-        form = CategoriaForm(instance=category)       
-    return render(request, 'categoria_form.html', {'form': form})
-
-
-#para boorrar una categoria que no sirva o que se haya ido mal
-@login_required
-def delete_category(request, id):
-    category = get_object_or_404(Categoria, pk = id)
-    category.delete()
-    return redirect("bicicletas:category")
-
-
-#producto____________________________________________________________#
-def product(request):
-    products = Producto.objects.order_by('name')
-    template = loader.get_template('producto.html')
-    return HttpResponse(template.render({'products': products}, request))
-
-@login_required #edita un producto qye se haya ido mal 
-def edit_product(request, id):
-    product = get_object_or_404(Producto, pk = id)
-    if request.method == 'POST':
-        form = ProductoForm(request.POST, request.FILES, instance=product)
-        if form.is_valid():
-            form.save()
-            return redirect('bicicletas:product')
-    else:
-        form = ProductoForm(instance=product)       
-    return render(request, 'producto_form.html', {'form': form})#al fomrulario de los productos
-
-#muestra informacione especifica del producto qye pusimos 
-def info_product(request, product_id):
-    product = get_object_or_404(Producto, pk= product_id)
-    template = loader.get_template('display_producto.html')#detalles del producto 
-    context = {
-        'product': product
-    }
-    return HttpResponse(template.render(context, request))
 #para añadir las bicicletas en el formulario de producto
 @login_required
 def add_product(request):
@@ -145,21 +105,63 @@ def add_product(request):
     return render(request, 'producto_form.html', {'form': form})
 #aqui------------------------->
 
-
-#se borra producto 
 @login_required
-def delete_product(request, id):
+def add_venta(request):
+    form = VentaForm(request.POST or None, request.FILES or None)
+    
+    if request.method == 'POST' and form.is_valid():
+        venta = form.save(commit=False)
+        product = venta.product
+        
+        if venta.cantidad <= product.cantidad:
+            product.cantidad -= venta.cantidad
+            product.save()
+            venta.save()
+            return redirect('bicicletas:venta')
+        else:
+            form.add_error('cantidad', 'Por el momento no hay bicicletas, proximamente') #asi como arriba 
+
+    return render(request, 'venta_form.html', {'form': form})
+
+#-------------------------------------------------------------------------------------------------------------------------
+#para editar el c,iente
+@login_required
+def edit_cliente(request, id):
+    cliente = get_object_or_404(Cliente, pk = id)
+    if request.method == 'POST':
+        form = ClienteForm(request.POST, request.FILES, instance=cliente)
+        if form.is_valid():
+            form.save()
+            return redirect('bicicletas:cliente')
+    else:
+        form = ClienteForm(instance=cliente)       
+    return render(request, 'cliente_form.html', {'form': form})
+
+
+#para editar si es que se hubo un errro al ingrsar akgo en el añadir categoria
+@login_required
+def edit_category(request, id):
+    category = get_object_or_404(Categoria, pk = id)
+    if request.method == 'POST':
+        form = CategoriaForm(request.POST, request.FILES, instance=category)
+        if form.is_valid():
+            form.save()
+            return redirect('bicicletas:category')
+    else:
+        form = CategoriaForm(instance=category)       
+    return render(request, 'categoria_form.html', {'form': form})
+
+@login_required #edita un producto qye se haya ido mal 
+def edit_product(request, id):
     product = get_object_or_404(Producto, pk = id)
-    product.delete()
-    return redirect("bicicletas:product")
-
-
-#ventas---------------------------------------------------#
-def venta(request):
-    ventas = Venta.objects.order_by('product')
-    template = loader.get_template('venta.html')
-    return HttpResponse(template.render({'ventas': ventas}, request))
-
+    if request.method == 'POST':
+        form = ProductoForm(request.POST, request.FILES, instance=product)
+        if form.is_valid():
+            form.save()
+            return redirect('bicicletas:product')
+    else:
+        form = ProductoForm(instance=product)       
+    return render(request, 'producto_form.html', {'form': form})#al fomrulario de los productos
 
 @login_required
 def edit_venta(request, id):
@@ -180,33 +182,28 @@ def edit_venta(request, id):
 
     return render(request, 'venta_form.html', {'form': form})
 
+#------------------------------------------------------------------------------------------------------------
+#funciones para borrar
 @login_required
-def add_venta(request):
-    form = VentaForm(request.POST or None, request.FILES or None)
-    
-    if request.method == 'POST' and form.is_valid():
-        venta = form.save(commit=False)
-        product = venta.product
-        
-        if venta.cantidad <= product.cantidad:
-            product.cantidad -= venta.cantidad
-            product.save()
-            venta.save()
-            return redirect('bicicletas:venta')
-        else:
-            form.add_error('cantidad', 'No hay bicicletas') #asi como arriba 
-
-    return render(request, 'venta_form.html', {'form': form})
+def delete_cliente(request, id):
+    cliente = get_object_or_404(Cliente, pk = id)
+    cliente.delete()
+    return redirect("bicicletas:cliente")
 
 
-def info_venta(request, sale_id):
-    venta = get_object_or_404(Venta, pk= sale_id)
-    template = loader.get_template('display_venta.html')#detalles de la venta que se hizo 
-    context = {
-        'venta': venta
-    }
-    return HttpResponse(template.render(context, request))
+#para boorrar una categoria que no sirva o que se haya ido mal
+@login_required
+def delete_category(request, id):
+    category = get_object_or_404(Categoria, pk = id)
+    category.delete()
+    return redirect("bicicletas:category")
 
+#se borra producto 
+@login_required
+def delete_product(request, id):
+    product = get_object_or_404(Producto, pk = id)
+    product.delete()
+    return redirect("bicicletas:product")
 
 #para borrar
 @login_required
@@ -215,7 +212,67 @@ def delete_venta(request, id):
     venta.delete()
     return redirect("bicicletas:venta")
 
+
 #lista de las ventas(aun en procesof)
 def ventas_list(request):
     ventas = Venta.objects.all()  #  todas las ventas
-    return render(request, 'ventas_list.html', {'ventas': ventas})
+    return render(request, 'display_venta.html', {'venta': ventas})
+
+def detalle_venta(request, venta_id):
+    venta = get_object_or_404(Venta, pk=venta_id)
+    return render(request, 'display_venta.html', {'venta': venta})
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
