@@ -1,32 +1,36 @@
 {% extends "base.html" %}
 {% block title %}Clientes{% endblock title %}
 {% block content %}
-<h5>
-    <p style="height: 1rem;"></p>
-    <a href="{% url 'bicicletas:add_cliente' %}" class="btn btn-primary">
-        <i class="fa-regular fa-address-card"> Agregar Cliente</i>
-    </a>
-    <p style="height: 1rem;"></p>
-    <ol class="list-group list-group-numbered">
+<div class="container mt-4">
+    <div class="d-flex justify-content-between align-items-center mb-3">
+        <h2><b>Lista de Clientes</b></h2>
+        <a href="{% url 'bicicletas:add_cliente' %}" class="btn btn-primary btn-lg">
+            <i class="fa-solid fa-plus"></i> Agregar Cliente
+        </a>
+    </div>
+    
+    <div class="row row-cols-1 row-cols-md-2 row-cols-lg-3 g-4">
         {% for cliente in clientes %}
-        <li class="list-group-item d-flex justify-content-between align-items-start">
-            <div class="ms-2 me-auto">
-                <div class="fw-bold"><strong>Nombre:</strong> {{ cliente }}</div>
-                <p class="card-text"><strong>Cédula:</strong> {{ cliente.cedula }}</p>
+        <div class="col">
+            <div class="card h-100 shadow-sm">
+                <div class="card-body">
+                    <h5 class="card-title"><b>Nombre: {{ cliente }}</b></h5>
+                    <p class="card-text"><strong>Cédula:</strong> {{ cliente.cedula }}</p>
+                </div>
+                <div class="card-footer d-flex justify-content-around">
+                    <a href="{% url 'bicicletas:info_cliente' cliente.id %}" class="btn btn-outline-info btn-sm">
+                        <i class="fa-solid fa-eye"></i> Ver
+                    </a>
+                    <a href="{% url 'bicicletas:edit_cliente' cliente.id %}" class="btn btn-outline-warning btn-sm">
+                        <i class="fa-solid fa-pencil"></i> Editar
+                    </a>
+                    <a href="{% url 'bicicletas:delete_cliente' cliente.id %}" class="btn btn-outline-danger btn-sm">
+                        <i class="fa-solid fa-trash"></i> Eliminar
+                    </a>
+                </div>
             </div>
-            <div>
-                <a href="{% url 'bicicletas:info_cliente' cliente.id %}" class="btn btn-primary">
-                    <i class="fa-solid fa-eye"></i>
-                </a>
-                <a href="{% url 'bicicletas:edit_cliente' cliente.id %}" class="btn btn-primary">
-                    <i class="fa-solid fa-pencil"></i>
-                </a>
-                <a href="{% url 'bicicletas:delete_cliente' cliente.id %}" class="btn btn-danger">
-                    <i class="fa-solid fa-trash"></i>
-                </a>
-            </div>
-        </li>
+        </div>
         {% endfor %}
-    </ol>
-</h5>
+    </div>
+</div>
 {% endblock content %}

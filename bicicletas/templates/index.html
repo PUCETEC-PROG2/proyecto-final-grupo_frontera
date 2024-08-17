@@ -1,50 +1,61 @@
 {% extends "base.html" %}
 {% load static %}
-{% block title %}Catalogo de Bicicletas{% endblock title %}
+{% block title %}Catálogo de Bicicletas{% endblock title %}
 {% block content %}
-<div class="container mt-4">
+<div class="container mt-5">
     <div class="row row-cols-1 row-cols-md-2 row-cols-lg-4 g-4">
         <div class="col">
-            <div class="card h-100">
-                <img src="{% static "img1.png" %}" class="card-img-top" alt="Clientes">
-                <div class="card-body">
-                    <h1 class="card-title"><strong>Clientes</strong></h5>
+            <div class="card h-100 border-0 shadow">
+                <div class="position-relative">
+                    <img src="{% static 'img1.png' %}" class="card-img-top" alt="Clientes">
+                    <div class="card-img-overlay d-flex justify-content-center align-items-center">
+                    </div>
+                </div>
+                <div class="card-body text-center">
                     <p class="card-text">Administrar clientes.</p>
-                    <a href="{% url 'bicicletas:cliente' %}" class="btn btn-primary"><strong>Ir a los Clientes</strong></a>
+                    <a href="{% url 'bicicletas:cliente' %}" class="btn btn-outline-primary w-100"><strong>Ir a los Clientes</strong></a>
                 </div>
             </div>
         </div>
         <div class="col">
-            <div class="card h-100">
-                <img src="{% static "img2.png" %}" class="card-img-top" alt="Categorías">
-                <div class="card-body">
-                    <h2 class="card-title"><strong><big>Categorías</big></strong></h5>
+            <div class="card h-100 border-0 shadow">
+                <div class="position-relative">
+                    <img src="{% static 'img2.png' %}" class="card-img-top" alt="Categorías">
+                    <div class="card-img-overlay d-flex justify-content-center align-items-center">
+                    </div>
+                </div>
+                <div class="card-body text-center">
                     <p class="card-text">Administrar las categorías.</p>
-                    <a href="{% url 'bicicletas:category' %}" class="btn btn-primary"><strong>Ir a Categorías</strong></a>
+                    <a href="{% url 'bicicletas:category' %}" class="btn btn-outline-primary w-100"><strong>Ir a Categorías</strong></a>
                 </div>
             </div>
         </div>
         <div class="col">
-            <div class="card h-100">
-                <img src="{% static "img3.png" %}" class="card-img-top" alt="Productos">
-                <div class="card-body">
-                    <h1 class="card-title"><strong>Productos</strong></h5>
+            <div class="card h-100 border-0 shadow">
+                <div class="position-relative">
+                    <img src="{% static 'img3.png' %}" class="card-img-top" alt="Productos">
+                    <div class="card-img-overlay d-flex justify-content-center align-items-center">
+                    </div>
+                </div>
+                <div class="card-body text-center">
                     <p class="card-text">Administrar los productos.</p>
-                    <a href="{% url 'bicicletas:product' %}" class="btn btn-primary"><strong>Ir a los Productos</strong></a>
+                    <a href="{% url 'bicicletas:product' %}" class="btn btn-outline-primary w-100"><strong>Ir a los Productos</strong></a>
                 </div>
             </div>
         </div>
         <div class="col">
-            <div class="card h-100">
-                <img src="{% static "img4.png" %}" class="card-img-top" alt="Ventas">
-                <div class="card-body">
-                    <h1 class="card-title"><strong>Ventas</strong></h5>
+            <div class="card h-100 border-0 shadow">
+                <div class="position-relative">
+                    <img src="{% static 'img4.png' %}" class="card-img-top" alt="Ventas">
+                    <div class="card-img-overlay d-flex justify-content-center align-items-center">
+                    </div>
+                </div>
+                <div class="card-body text-center">
                     <p class="card-text">Administrar ventas.</p>
-                    <a href="{% url 'bicicletas:venta' %}" class="btn btn-primary"><strong>Ir a las Ventas</strong></a>
+                    <a href="{% url 'bicicletas:venta' %}" class="btn btn-outline-primary w-100"><strong>Ir a las Ventas</strong></a>
                 </div>
             </div>
         </div>
     </div>
 </div>
-
 {% endblock content %}

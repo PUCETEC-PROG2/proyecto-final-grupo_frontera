@@ -1,35 +1,51 @@
 {% extends "base.html" %}
 {% block title %}Categoría {{ category.name }}{% endblock title %}
+
+{% load static %}
+
 {% block content %}
-<p style="height: 1rem;"></p>
-<a href="{% url 'bicicletas:category' %}" class="btn btn-primary">
-    <i class="fa-solid fa-arrow-left"><strong> Volver</strong></i>
-</a>
-<p style="height: 1rem;"></p>
-<h1><strong>Información de la categoría:<strong></h1>
-<p style="height: 5px;"></p>
-<h4>
-    <dl class="row">
-        <dt class="col-sm-3">Nombre de Categoría</dt>
-        <dd class="col-sm-9">{{ category.name }}</dd>
+<div class="container mt-4">
+    <div class="d-flex justify-content-between align-items-center mb-4">
+        <a href="{% url 'bicicletas:category' %}" class="btn btn-secondary btn-lg">
+            <i class="fa-solid fa-arrow-left"></i> <strong>Volver</strong>
+        </a>
+        <h1>Información de la Categoría</h1>
+    </div>
 
-        <dt class="col-sm-3">Tipo</dt>
-        <dd class="col-sm-9">{{ category.type }}</dd>
+    <div class="card mb-4 shadow-sm border-light">
+        <div class="card-body">
+            <h5 class="card-title">{{ category.name }}</h5>
+            <dl class="row">
+                <dt class="col-sm-4">Nombre de Categoría:</dt>
+                <dd class="col-sm-8">{{ category.name }}</dd>
 
-        <dt class="col-sm-3">Descripción</dt>
-        <dd class="col-sm-9">{{ category.descripcion }}</dd>
+                <dt class="col-sm-4">Tipo:</dt>
+                <dd class="col-sm-8">{{ category.type }}</dd>
 
-        <dt class="col-sm-3">Marca</dt>
-        <dd class="col-sm-9">{{ category.marca }}</dd>
+                <dt class="col-sm-4">Descripción:</dt>
+                <dd class="col-sm-8">{{ category.descripcion }}</dd>
 
-        <dt class="col-sm-3">Foto:</dt>
-        <dd class="col-sm-9">
-            {% if category.picture %}
-                <img src="{{ category.picture.url }}" alt="Imagen de {{ category.name }}" style="max-width: 300px; max-height: 300px;">
-            {% else %}
-                <p>No hay imagen disponible</p>
-            {% endif %}
-        </dd>
-    </dl>
-</h4>
+                <dt class="col-sm-4">Marca:</dt>
+                <dd class="col-sm-8">{{ category.marca }}</dd>
+
+                <dt class="col-sm-4">Foto:</dt>
+                <dd class="col-sm-8">
+                    {% if category.picture %}
+                        <img src="{{ category.picture.url }}" alt="Imagen de {{ category.name }}" class="img-fluid" style="max-width: 300px; max-height: 300px; object-fit: cover;">
+                    {% else %}
+                        <p class="text-muted">No hay imagen disponible</p>
+                    {% endif %}
+                </dd>
+            </dl>
+        </div>
+        <div class="card-footer d-flex justify-content-end">
+            <a href="{% url 'bicicletas:edit_category' category.id %}" class="btn btn-warning btn-sm me-2">
+                <i class="fa-solid fa-pencil"></i> Editar
+            </a>
+            <a href="{% url 'bicicletas:delete_category' category.id %}" class="btn btn-danger btn-sm">
+                <i class="fa-solid fa-trash"></i> Eliminar
+            </a>
+        </div>
+    </div>
+</div>
 {% endblock content %}

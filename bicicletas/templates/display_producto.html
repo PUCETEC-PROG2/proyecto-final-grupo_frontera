@@ -1,33 +1,42 @@
 {% extends "base.html" %}
-{% block title %}Producto  {{ product }}{% endblock title %}
+{% block title %}Producto {{ product.name }}{% endblock title %}
+
+{% load static %}
+
 {% block content %}
-<p style="height: 1rem;"></p>
-<a href="{% url 'bicicletas:product' %}" class="btn btn-primary">
-    <i class="fa-solid fa-arrow-left"><strong> Volver</strong></i>
-</a>
-<p style="height: 1rem;"></p>
-<h1><strong>Información:<strong></h1>
-    <p style="height: 5px;"></p>
-<h4>
-    <div class="card mb-3" style="max-width: 100%;">    
+<div class="container mt-4">
+    <div class="d-flex justify-content-between align-items-center mb-4">
+        <a href="{% url 'bicicletas:product' %}" class="btn btn-secondary">
+            <i class="fa-solid fa-arrow-left"></i> <strong>Volver</strong>
+        </a>
+        <h1>Información del Producto</h1>
+    </div>
+
+    <div class="card mb-4 shadow-sm">
         <div class="row g-0">
             <div class="col-md-4">
-                <img src="{{ product.picture.url }}" alt="" width="100%" height="100%">
+                {% if product.picture %}
+                <img src="{{ product.picture.url }}" class="img-fluid rounded-start" alt="Imagen de {{ product.name }}" style="object-fit: cover; height: 100%;">
+                {% else %}
+                <img src="{% static 'default-product-image.png' %}" class="img-fluid rounded-start" alt="Imagen de {{ product.name }}" style="object-fit: cover; height: 100%;">
+                {% endif %}
             </div>
             <div class="col-md-8">
                 <div class="card-body">
-                    <p class="card-text"><dt class="col-sm-3">Marca</dt>
-                        <dd class="col-sm-9">{{ product.marca }}</dd></p>
-                    <p class="card-text"><dt class="col-sm-3">Precio</dt>
-                        <dd class="col-sm-9">{{ product.price }}</dd></p>
-                    <p class="card-text"><dt class="col-sm-3">Cantidad</dt>
-                        <dd class="col-sm-9">{{ product.cantidad }}</dd></p>
-                    <p class="card-text"><dt class="col-sm-3">Categoria</dt>
-                        <dd class="col-sm-9">{{ product.category }}</dd></p>
+                    <h5 class="card-title">{{ product.name }}</h5>
+                    <dl class="row">
+                        <dt class="col-sm-3">Marca:</dt>
+                        <dd class="col-sm-9">{{ product.marca }}</dd>
+                        <dt class="col-sm-3">Precio:</dt>
+                        <dd class="col-sm-9">{{ product.price|floatformat:2 }} USD</dd>
+                        <dt class="col-sm-3">Cantidad:</dt>
+                        <dd class="col-sm-9">{{ product.cantidad }}</dd>
+                        <dt class="col-sm-3">Categoría:</dt>
+                        <dd class="col-sm-9">{{ product.category }}</dd>
+                    </dl>
                 </div>
             </div>
         </div>
     </div>
-</h4>
-
+</div>
 {% endblock content %}

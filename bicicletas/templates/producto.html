@@ -1,43 +1,53 @@
 {% extends "base.html" %}
-{% block title %}Productos del catalogo{% endblock title %}
+{% load static %}
+
+{% block title %}Productos del Catálogo{% endblock title %}
+
 {% block content %}
-<h5>
-    <p style="height: 1rem;"></p>
-    <a href="{% url 'bicicletas:add_product' %}" class="btn btn-primary">
-        <i class="fa-solid fa-wine-bottle"> Agregar Producto</i>
-    </a>
-    <p style="height: 1rem;"></p>
-    <div class="row row-cols-1 row-cols-md-2 g-4">
+<div class="container mt-4">
+    <div class="d-flex justify-content-between align-items-center mb-4">
+        <h2>Productos del Catálogo</h2>
+        <a href="{% url 'bicicletas:add_product' %}" class="btn btn-success btn-lg">
+            <i class="fa-solid fa-plus"></i> Agregar Producto
+        </a>
+    </div>
+
+    <div class="row row-cols-1 row-cols-md-2 row-cols-lg-3 g-4">
         {% for product in products %}
-            <div class="col">
-                <div class="card h-100">
-                    <div class="row g-0">
-                        <div class="col-md-4">
-                            <img src="{{ product.picture.url }}" alt="" class="img-fluid rounded-start">
-                        </div>
-                        <div class="col-md-8">
-                            <div class="card-body">
-                                <h5 class="card-title"><strong>Nombre:</strong> {{ product }}</h5>
-                                <p class="card-text"><strong>Precio:</strong> {{ product.price }}</p>
-                                <p class="card-text"><strong>Cantidad:</strong> {{ product.cantidad }}</p>
-                                {% if user.is_authenticated %}
-                                    <a href="{% url 'bicicletas:info_product' product.id %}" class="btn btn-primary">
-                                        <i class="fa-solid fa-eye"></i>
-                                    </a>
-                                    <a href="{% url 'bicicletas:edit_product' product.id %}" class="btn btn-primary">
-                                        <i class="fa-solid fa-pencil"></i>
-                                    </a>
-                                    <a href="{% url 'bicicletas:delete_product' product.id %}" class="btn btn-danger">
-                                        <i class="fa-solid fa-trash"></i>
-                                    </a>
-                                    
-                                {% endif %}
-                            </div>
-                        </div>
+        <div class="col">
+            <div class="card h-100 shadow-lg border-light">
+                {% if product.picture %}
+                <img src="{{ product.picture.url }}" class="card-img-top" alt="Imagen de {{ product.name }}" style="object-fit: cover; height: 200px;">
+                {% else %}
+                <img src="{% static 'default-product-image.png' %}" class="card-img-top" alt="Imagen de {{ product.name }}" style="object-fit: cover; height: 200px;">
+                {% endif %}
+                <div class="card-body d-flex flex-column">
+                    <h5 class="card-title mb-3">{{ product.name }}</h5>
+                    <p class="card-text mb-1"><strong>Precio:</strong> {{ product.price|floatformat:2 }} USD</p>
+                    <p class="card-text mb-3"><strong>Cantidad:</strong> {{ product.cantidad }}</p>
+                    <div class="mt-auto">
+                        {% if user.is_authenticated %}
+                        <a href="{% url 'bicicletas:info_product' product.id %}" class="btn btn-outline-info btn-sm me-2">
+                            <i class="fa-solid fa-eye"></i> Ver
+                        </a>
+                        <a href="{% url 'bicicletas:edit_product' product.id %}" class="btn btn-outline-warning btn-sm me-2">
+                            <i class="fa-solid fa-pencil"></i> Editar
+                        </a>
+                        <a href="{% url 'bicicletas:delete_product' product.id %}" class="btn btn-outline-danger btn-sm">
+                            <i class="fa-solid fa-trash"></i> Eliminar
+                        </a>
+                        {% endif %}
                     </div>
                 </div>
             </div>
+        </div>
+        {% empty %}
+        <div class="col-12">
+            <div class="alert alert-info text-center" role="alert">
+                No hay productos disponibles.
+            </div>
+        </div>
         {% endfor %}
     </div>
-</h5>
+</div>
 {% endblock content %}

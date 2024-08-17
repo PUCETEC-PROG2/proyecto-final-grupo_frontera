@@ -1,39 +1,49 @@
 {% extends "base.html" %}
-{% block title %}Ventas{% endblock title %}
+{% block title %}Venta {{ venta.id }}{% endblock title %}
+
+{% load static %}
+
 {% block content %}
 <div class="container mt-4">
-    <h1 class="mb-4">Listado de Ventas</h1>
-    <a href="{% url 'bicicletas:add_venta' %}" class="btn btn-primary mb-3">
-        <i class="fa-regular fa-address-card"></i> Agregar Venta
-    </a>
-    <ol class="list-group list-group-numbered">
-        {% for venta in ventas %}
-        <li class="list-group-item d-flex justify-content-between align-items-start">
-            <div class="ms-2 me-auto">
-                <div class="fw-bold"><strong>Fecha:</strong> {{ venta.date }}</div>
-                <p class="card-text"><strong>Cliente:</strong> {{ venta.cliente }}</p>
-                <p class="card-text"><strong>Producto:</strong> {{ venta.product }}</p>
-                <p class="card-text"><strong>Precio:</strong> {{ venta.price }}</p>
-            </div>
-            <div>
-                <a href="{% url 'bicicletas:info_venta' venta.id %}" class="btn btn-info btn-sm">
-                    <i class="fa-solid fa-eye"></i> Ver
-                </a>
-                
-                <a href="{% url 'bicicletas:edit_venta' venta.id %}" class="btn btn-warning btn-sm">
-                    <i class="fa-solid fa-pencil"></i> Editar
-                </a>
-                <a href="{% url 'bicicletas:delete_venta' venta.id %}" class="btn btn-danger btn-sm">
-                    <i class="fa-solid fa-trash"></i> Eliminar
-                </a>
-            </div>
-        </li>
-        {% empty %}
-        <li class="list-group-item">
+    <div class="d-flex justify-content-between align-items-center mb-4">
+        <a href="{% url 'bicicletas:venta' %}" class="btn btn-secondary btn-lg">
+            <i class="fa-solid fa-arrow-left"></i> <strong>Volver</strong>
+        </a>
+        <h1>Detalles de la Venta</h1>
+    </div>
 
-            {{venta}}
-        </li>
-        {% endfor %}
-    </ol>
+    <div class="card mb-4 shadow-sm border-light">
+        <div class="card-body">
+            <h5 class="card-title">Venta #{{ venta.id }}</h5>
+            <div class="row">
+                <div class="col-md-6">
+                    <dl class="row">
+                        <dt class="col-sm-4">Fecha:</dt>
+                        <dd class="col-sm-8">{{ venta.date }}</dd>
+                        <dt class="col-sm-4">Cliente:</dt>
+                        <dd class="col-sm-8">{{ venta.cliente }}</dd>
+                        <dt class="col-sm-4">Producto:</dt>
+                        <dd class="col-sm-8">{{ venta.product }}</dd>
+                    </dl>
+                </div>
+                <div class="col-md-6">
+                    <dl class="row">
+                        <dt class="col-sm-4">Precio:</dt>
+                        <dd class="col-sm-8">{{ venta.price|floatformat:2 }} USD</dd>
+                        <dt class="col-sm-4">Cantidad:</dt>
+                        <dd class="col-sm-8">{{ venta.cantidad }}</dd>
+                    </dl>
+                </div>
+            </div>
+        </div>
+        <div class="card-footer d-flex justify-content-end">
+            <a href="{% url 'bicicletas:edit_venta' venta.id %}" class="btn btn-warning btn-sm me-2">
+                <i class="fa-solid fa-pencil"></i> Editar
+            </a>
+            <a href="{% url 'bicicletas:delete_venta' venta.id %}" class="btn btn-danger btn-sm">
+                <i class="fa-solid fa-trash"></i> Eliminar
+            </a>
+        </div>
+    </div>
 </div>
 {% endblock content %}

@@ -1,23 +1,38 @@
 {% extends "base.html" %}
 {% block title %}Login{% endblock title %}
 {% block content %}
-<div class="row d-flex justify-content-center">
+<div class="row d-flex justify-content-center align-items-center min-vh-100">
     <div class="col-md-4">
-        <p style="height: 3rem;"></p>
-        <h1><b>Inicio de sesión</b></h1>
-        <form action="{% url 'bicicletas:login' %}" method="post">
-            {% csrf_token %}
-            <div class="mb-4">
-                <label for="username" class="form-label" ><strong>Usuario:</strong></label>
-                <input type="text" name="username" id="username" class="form-control" required>
-            </div>
-            <div class="mb-4">
-                <label for="password" class="form-label"><strong>Contraseña:</strong></label>
-                <input type="password" name="password" id="password" class="form-control" required>
-            </div>
-            <button type="submit" class="btn btn-primary"><strong>Ingresar</strong></button>
-        </form>
+        <div class="card shadow-lg p-4 border-0 rounded-3">
+            <h2 class="text-center mb-4 text-primary"><b>Inicio de sesión</b></h2>
+            <form action="{% url 'bicicletas:login' %}" method="post">
+                {% csrf_token %}
+                <div class="mb-3">
+                    <label for="username" class="form-label"><strong>Usuario</strong></label>
+                    <div class="input-group">
+                        <span class="input-group-text bg-primary text-white">
+                            <i class="fa-solid fa-user"></i>
+                        </span>
+                        <input type="text" name="username" id="username" class="form-control" required>
+                    </div>
+                </div>
+                <div class="mb-3">
+                    <label for="password" class="form-label"><strong>Contraseña</strong></label>
+                    <div class="input-group">
+                        <span class="input-group-text bg-primary text-white">
+                            <i class="fa-solid fa-lock"></i>
+                        </span>
+                        <input type="password" name="password" id="password" class="form-control" required>
+                    </div>
+                </div>
+                <div class="d-grid">
+                    <button type="submit" class="btn btn-primary btn-block">
+                        <strong>Ingresar</strong>
+                    </button>
+                </div>
+            </form>
+            
+        </div>
     </div>
-
 </div>
 {% endblock content %}

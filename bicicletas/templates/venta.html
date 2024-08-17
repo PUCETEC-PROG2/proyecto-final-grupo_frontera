@@ -1,35 +1,48 @@
 {% extends "base.html" %}
-{% block title %}Venta{% endblock title %}
+{% load static %}
+
+{% block title %}Ventas{% endblock title %}
+
 {% block content %}
-<h5>
-    <p style="height: 1rem;"></p>
-    <a href="{% url 'bicicletas:add_venta' %}" class="btn btn-primary">
-        <i class="fa-regular fa-address-card"> Agregar Pedido</i>
-    </a>
-    <p style="height: 1rem;"></p>
-    <ol class="list-group list-group-numbered">
+<div class="container mt-4">
+    <div class="d-flex justify-content-between align-items-center mb-4">
+        <h2>Ventas</h2>
+        <a href="{% url 'bicicletas:add_venta' %}" class="btn btn-success btn-lg">
+            <i class="fa-solid fa-plus"></i> Agregar Venta
+        </a>
+    </div>
+
+    <div class="row row-cols-1 row-cols-md-2 row-cols-lg-3 g-4">
         {% for venta in ventas %}
-        <li class="list-group-item d-flex justify-content-between align-items-start">
-            <div class="ms-2 me-auto">
-                <div class="fw-bold"><strong>Fecha:</strong> {{ venta.date }}</div>
+        <div class="col">
+            <div class="card h-100 shadow-lg border-light">
+                <div class="card-body">
+                    <h5 class="card-title mb-2">Fecha: {{ venta.date }}</h5>
                     <p class="card-text"><strong>Cliente:</strong> {{ venta.cliente }}</p>
                     <p class="card-text"><strong>Producto:</strong> {{ venta.product }}</p>
                     <p class="card-text"><strong>Precio:</strong> {{ venta.price }}</p>
-                    <p class="card-text"><strong>Cantidad:</strong>{{venta.cantidad}}</p>
+                    <p class="card-text"><strong>Cantidad:</strong> {{ venta.cantidad }}</p>
+                </div>
+                <div class="card-footer d-flex justify-content-around">
+                    <a href="{% url 'bicicletas:info_venta' venta.id %}" class="btn btn-outline-info btn-sm">
+                        <i class="fa-solid fa-eye"></i> Ver
+                    </a>
+                    <a href="{% url 'bicicletas:edit_venta' venta.id %}" class="btn btn-outline-warning btn-sm">
+                        <i class="fa-solid fa-pencil"></i> Editar
+                    </a>
+                    <a href="{% url 'bicicletas:delete_venta' venta.id %}" class="btn btn-outline-danger btn-sm">
+                        <i class="fa-solid fa-trash"></i> Eliminar
+                    </a>
+                </div>
             </div>
-                <div>
-                    <a href="{% url 'bicicletas:info_venta' venta.id %}" class="btn btn-primary">
-                        <i class="fa-solid fa-eye"></i>
-                    </a>
-                    <a href="{% url 'bicicletas:edit_venta' venta.id %}" class="btn btn-primary">
-                        <i class="fa-solid fa-pencil"></i>
-                    </a>
-                    <a href="{% url 'bicicletas:delete_venta' venta.id %}" class="btn btn-danger">
-                        <i class="fa-solid fa-trash"></i>
-                    </a>
-                </div>  
-        </li>
+        </div>
+        {% empty %}
+        <div class="col-12">
+            <div class="alert alert-info text-center" role="alert">
+                No hay ventas disponibles.
+            </div>
+        </div>
         {% endfor %}
-    </ol>
-</h5>
+    </div>
+</div>
 {% endblock content %}
